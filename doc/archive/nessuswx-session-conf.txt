@@ -1,0 +1,16 @@
+# This file was created automatically by NessusWX
+# Session: Session1
+# Exported Wed Sep 08 15:57:49 2004
+
+begin(SERVER_PREFS)
+ max_checks = 10
+ max_hosts = 16
+ auto_enable_dependencies = no
+ safe_checks = yes
+ reverse_lookup = no
+ optimize_test = yes
+ cgi_path = /cgi-bin
+ port_range = 1-1024
+ ntp_keep_communication_alive = yes
+ ntp_opt_show_end = yes
+end(SERVER_PREFS)

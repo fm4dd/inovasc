@@ -1,0 +1,159 @@
+==== start scanner_connect ====
+Creating socket file descriptor.
+Loading content into filedescriptor.
+Try connecting to 127.0.0.1.
+Connected to: 127.0.0.1.
+SSL_get_cipher = DES-CBC3-SHA
+==== end scanner_connect ====
+
+==== start scanner_login ====
+Sending Data: < OTP/1.0 >
+Receive Data: Receive Data: User : 
+Sending Data: fm2
+Receive Data: Password : 
+Sending Data: test
+Receive Data: SERVER <|> PLUGINS_MD5 <|> ba70d1d3f851b90c4eca5ee3c61e8f67 <|> SERVER
+sucessful login
+==== end scanner_login ====
+
+==== start scanner_getprefs ====
+Sending Data: SERVER <|> PREFERENCES <|>
+Receive Data: SERVER <|> PREFERENCES <|>
+...........................................................................................................Receive Data: <|> SERVER
+
+==== end scanner_getprefs ====
+
+==== start scanner_getrules ====
+Receive Data: SERVER <|> RULES <|>
+Receive Data: <|> SERVER
+RULES <|>
+
+==== end scanner_getrules ====
+
+==== start scanner_getpdeps ====
+Receive Data: SERVER <|> PLUGINS_DEPENDENCIES
+.................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................................Receive Data: <|> SERVER
+
+==== end scanner_getpdeps ====
+
+==== start scanner_setprefs ====
+Sending Data: CLIENT <|> PREFERENCES <|>
+Sending Data: plugin_set <|>
+Sending Data: <|> CLIENT
+==== end scanner_setpreps ====
+
+==== start scanner_setrules ====
+Sending Data: CLIENT <|> RULES <|>
+Sending Data: <|> CLIENT
+==== end scanner_setrules ====
+
+==== start scanner_newscan ====
+Sending Data: CLIENT <|> LONG_ATTACK <|>
+Sending Data: 9
+127.0.0.1
+Sending Data: <|> CLIENT
+Receive Data: SERVER <|> TIME <|> SCAN_START <|> Sat Jan 21 16:03:22 2012 <|> SERVER
+==== end scanner_newscan ====
+
+==== start scanner_newscan ====
+Sending Data: CLIENT <|> LONG_ATTACK <|>
+Sending Data: 9
+127.0.0.1
+Receive Data: SERVER <|> TIME <|> SCAN_START <|> Sat Jan 21 17:07:22 2012 <|> SERVER
+==== end scanner_newscan ====
+
+==== start scanner_results ====
+Receive Data: SERVER <|> TIME <|> HOST_START <|> 127.0.0.1 <|> Sat Jan 21 17:07:22 2012 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> attack <|> 2/24069 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> ssh (22/tcp) <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> smtp (25/tcp) <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> http (80/tcp) <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> sunrpc (111/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 100/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> smux (199/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 200/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> ldap (389/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 301/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> https (443/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 401/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> submission (587/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 501/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> ldaps (636/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 601/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> hp-alarm-mgr (783/tcp) <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> imaps (993/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 701/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 801/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 901/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1001/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1101/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1201/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1301/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1401/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1501/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1601/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1701/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1801/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 1901/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2001/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2101/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2201/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2301/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2401/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2501/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2601/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2701/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2801/4482 <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> mysql (3306/tcp) <|> SERVER
+Receive Data: SERVER <|> PORT <|> 127.0.0.1 <|> dyna-access (3310/tcp) <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 2901/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 3001/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 3101/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 3201/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 3301/4482 <|> SERVER
+Receive Data: SERVER <|> STATUS <|> 127.0.0.1 <|> portscan <|> 3401/4482 <|> SERVER
+
+==== start scanner_logout ====
+Received retcode: 0
+==== end scanner_logout ====
+
+Closed connection to 127.0.0.1.
+
+Log output in openvassd.messages:
+=================================
+[Sat Jan 21 17:00:17 2012][11367] user fm2 starts a new scan. Target(s) : 127.0.0.1, with max_hosts = 30 and max_checks = 10
+[Sat Jan 21 17:00:17 2012][11367] user fm2 : testing 127.0.0.1 (::ffff:127.0.0.1) [11371]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_broadcast_ms_sql_discover_net.nasl against 127.0.0.1 [11372]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_domcon_brute_net.nasl against 127.0.0.1 [11373]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_broadcast_upnp_info_net.nasl against 127.0.0.1 [11374]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_snmp_win32_services_net.nasl against 127.0.0.1 [11375]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_oracle_sid_brute_net.nasl against 127.0.0.1 [11376]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_http_title_net.nasl against 127.0.0.1 [11377]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_asn_query_net.nasl against 127.0.0.1 [11378]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_ssl_cert_net.nasl against 127.0.0.1 [11379]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_ms_sql_hasdbaccess_net.nasl against 127.0.0.1 [11380]
+[Sat Jan 21 17:00:17 2012][11371] user fm2 : launching nmap_net/gb_nmap_p2p_conficker_net.nasl against 127.0.0.1 [11381]
+[Sat Jan 21 17:00:17 2012][11371] nmap_net/gb_nmap_broadcast_ms_sql_discover_net.nasl (process 11372) finished its job in 0.043 second
+...
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : Not launching GSHB/EL11/GSHB-11.nasl against 127.0.0.1 because a mandatory key is missing (this is not an error) 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching unknown_services.nasl against 127.0.0.1 [20799] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching scan_info.nasl against 127.0.0.1 [20800] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching kb_2_sc.nasl against 127.0.0.1 [20801] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching cpe_inventory.nasl against 127.0.0.1 [20803] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching check_ports.nasl against 127.0.0.1 [20804] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching host_summary.nasl against 127.0.0.1 [20806] 
+[Sat Jan 21 17:10:07 2012][16216] kb_2_sc.nasl (process 20801) finished its job in 0.020 seconds 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching system_characteristics.nasl against 127.0.0.1 [20810] 
+[Sat Jan 21 17:10:07 2012][16216] scan_info.nasl (process 20800) finished its job in 0.044 seconds 
+[Sat Jan 21 17:10:07 2012][16216] cpe_inventory.nasl (process 20803) finished its job in 0.035 seconds 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching host_details.nasl against 127.0.0.1 [20813] 
+[Sat Jan 21 17:10:07 2012][16216] user fm2 : launching cpe_policy.nasl against 127.0.0.1 [20814] 
+[Sat Jan 21 17:10:07 2012][16216] system_characteristics.nasl (process 20810) finished its job in 0.026 seconds 
+[Sat Jan 21 17:10:07 2012][16216] host_details.nasl (process 20813) finished its job in 0.017 seconds 
+[Sat Jan 21 17:10:07 2012][16216] check_ports.nasl (process 20804) finished its job in 0.051 seconds 
+[Sat Jan 21 17:10:07 2012][16216] host_summary.nasl (process 20806) finished its job in 0.052 seconds 
+[Sat Jan 21 17:10:07 2012][16216] cpe_policy.nasl (process 20814) finished its job in 0.024 seconds 
+[Sat Jan 21 17:10:07 2012][16216] unknown_services.nasl (process 20799) finished its job in 0.102 seconds 
+[Sat Jan 21 17:10:07 2012][16216] Finished testing 127.0.0.1. Time : 164.81 secs 
+[Sat Jan 21 17:10:07 2012][16211] user fm2 : test complete
+[Sat Jan 21 17:10:07 2012][16211] Total time to scan all hosts : 165 seconds 

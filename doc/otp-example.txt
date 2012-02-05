@@ -1,0 +1,122 @@
+RECV__: < OTP/1.0 >
+RECV__: User :
+SEND__: user
+RECV__: Password :
+SEND__: password
+RECV__: SERVER <|> PLUGINS_MD5 <|> 84a47471fdc009b5f99587fd9a4edf0a <|> SERVER
+SEND__: CLIENT <|> GO ON <|> CLIENT
+RECV__: SERVER <|> PREFERENCES <|>
+RECV__: max_hosts <|> 30
+RECV__: max_checks <|> 10
+RECV__: log_whole_attack <|> yes
+RECV__: cgi_path <|> /cgi-bin:/scripts
+RECV__: port_range <|> default
+RECV__: optimize_test <|> yes
+RECV__: language <|> english
+RECV__: checks_read_timeout <|> 5
+RECV__: non_simult_ports <|> 139, 445
+RECV__: plugins_timeout <|> 320
+RECV__: safe_checks <|> yes
+RECV__: auto_enable_dependencies <|> yes
+RECV__: silent_dependencies <|> yes
+RECV__: use_mac_addr <|> no
+RECV__: save_knowledge_base <|> no
+RECV__: kb_restore <|> no
+RECV__: only_test_hosts_whose_kb_we_dont_have <|> no
+RECV__: only_test_hosts_whose_kb_we_have <|> no
+RECV__: kb_dont_replay_scanners <|> no
+RECV__: kb_dont_replay_info_gathering <|> no
+RECV__: kb_dont_replay_attacks <|> no
+RECV__: kb_dont_replay_denials <|> no
+RECV__: kb_max_age <|> 864000
+RECV__: slice_network_addresses <|> no
+RECV__: nasl_no_signature_check <|> yes
+RECV__: ftp writeable directories[radio]:How to check if directories are writeable : <|> Trust the
+permissions (drwxrwx---);Attempt to store a file
+RECV__: Services[entry]:Number of connections done in parallel : <|> 6
+RECV__: Services[entry]:Network connection timeout : <|> 5
+
+8..loads of other preferences for nvts..]
+
+RECV__: The ACC router shows configuration without authentication <|> Services <|> 
+RECV__: 4Images <= 1.7.1 Directory Traversal Vulnerability <|> HTTP Server type and version <|> 
+RECV__: 4D WebStar Symbolic Link Vulnerability <|> HTTP Server type and version <|> 
+RECV__: 4D WebStar Tomcat Plugin Remote Buffer Overflow flaw <|> HTTP Server type and version <|> 
+RECV__: Non-Existant Page Physical Path Disclosure Vulnerability <|> Services <|> No 404 check <|> 
+RECV__: 3Com NBX VoIP NetSet Detection <|> Services <|> 
+RECV__: 12Planet Chat Server one2planet.infolet.InfoServlet XSS <|> Services <|> Web Server Cross Site
+Scripting <|> HTTP Server type and version <|> 
+RECV__: <|> SERVER
+SEND__: CLIENT <|> CERTIFICATES <|> CLIENT
+RECV__: SERVER <|> CERTIFICATES
+
+RECV__: 3EA37684620F61811D53C00415AE1168BF77A464 <|> Greenbone Security Feed <|> trusted <|> 889 <|>
+-----BEGIN PGP PUBLIC KEY
+[... key ... ] -----END PGP PUBLIC KEY BLOCK-----;
+
+RECV__: <|> SERVER
+SEND__: CLIENT <|> SESSIONS_LIST <|> CLIENT
+RECV__: SERVER <|> SESSIONS_LIST
+RECV__: <|> SERVER
+SEND__: CLIENT <|> PREFERENCES <|>
+SEND__: ntp_opt_show_end <|> yes
+SEND__: ntp_keep_communication_alive <|> yes
+SEND__: ntp_short_status <|> yes
+SEND__: ntp_client_accepts_notes <|> yes
+SEND__: max_hosts <|> 1
+SEND__: max_checks <|> 2
+SEND__: cgi_path <|> /cgi-bin:/scripts
+SEND__: port_range <|> default
+SEND__: auto_enable_dependencies <|> yes
+SEND__: silent_dependencies <|> no
+SEND__: host_expansion <|> ip
+SEND__: ping_hosts <|> no
+SEND__: reverse_lookup <|> no
+SEND__: optimize_test <|> yes
+SEND__: safe_checks <|> yes
+SEND__: use_mac_addr <|> no
+SEND__: unscanned_closed <|> no
+SEND__: save_knowledge_base <|> no
+SEND__: only_test_hosts_whose_kb_we_dont_have <|> no
+SEND__: only_test_hosts_whose_kb_we_have <|> no
+SEND__: kb_restore <|> no
+SEND__: kb_dont_replay_scanners <|> no
+SEND__: kb_dont_replay_info_gathering <|> no
+SEND__: kb_dont_replay_attacks <|> no
+SEND__: kb_dont_replay_denials <|> no
+SEND__: kb_max_age <|> 864000
+SEND__: log_whole_attack <|> yes
+SEND__: language <|> english
+SEND__: checks_read_timeout <|> 5
+SEND__: non_simult_ports <|> 139, 445
+SEND__: plugins_timeout <|> 320
+SEND__: slice_network_addresses <|> no
+SEND__: nasl_no_signature_check <|> yes
+SEND__: timeout.1.3.6.1.4.1.25623.1.0.900431 <|> 0
+SEND__: timeout.1.3.6.1.4.1.25623.1.0.800513 <|> 0
+SEND__: plugin_set <|> 1.3.6.1.4.1.25623.1.0.11187;1.3.6.1.4.1.25623.1.0.10335;...
+SEND__: HTTP NIDS evasion[checkbox]:Use HTTP HEAD instead of GET <|> no
+SEND__: HTTP NIDS evasion[radio]:URL encoding <|> none
+SEND__: HTTP NIDS evasion[radio]:Absolute URI type <|> none
+
+[... more client-side set nvt preferences ...]
+
+SEND__: Nmap (NASL wrapper)[entry]:Minimum wait between probes (ms) <|> 
+SEND__: Nmap (NASL wrapper)[file]:File containing grepable results : <|> 
+SEND__: <|> CLIENT
+SEND__: CLIENT <|> ATTACHED_FILE
+SEND__: name: [...]
+SEND__: content: octet/stream
+SEND__: bytes: 478
+RECV__: SERVER <|> FILE_ACCEPTED <|> SERVER
+SEND__: CLIENT <|> ATTACHED_FILE
+SEND__: name: [...]
+SEND__: content: octet/stream
+SEND__: bytes: 74
+RECV__: SERVER <|> FILE_ACCEPTED <|> SERVER
+SEND__: CLIENT <|> RULES <|>
+SEND__: <|> CLIENT
+SEND__: CLIENT <|> LONG_ATTACK <|>
+SEND__: 9
+SEND__: CLIENT <|> BYE <|> ACK
+SEND__: CLIENT <|> STOP_WHOLE_TEST <|> CLIENT

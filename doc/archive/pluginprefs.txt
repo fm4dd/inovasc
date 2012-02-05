@@ -1,0 +1,6 @@
+# This file was created automatically by NessusWX
+# Session: Session1
+# Exported Wed Sep 08 15:57:37 2004
+
+begin(PLUGINS_PREFS)
+end(PLUGINS_PREFS)

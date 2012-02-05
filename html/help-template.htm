@@ -1,0 +1,220 @@
+    <h3>1. Log in to a OpenVAS server</h3>
+    <hr>
+    <p>
+IP Address: This is the IP address of the OpenVAS server. The field has a
+default value set at compile time (i.e. set to localhost were I run a OpenVAS
+daemon), but it can be overwritten anytime for a different OpenVAS server IP
+address. There is no DNS name conversion built in, so don't use names but
+IP addresses only.
+    </p>
+    <p>
+OpenVAS Port: That's the TCP port number were the OpenVAS daemon listens. Port
+9391 is standard and set as the default. Should a remote OpenVAS daemon run on
+a different port, it can be set here.
+    </p>
+    <p>
+Encryption: The INOVASC client communication is encrypted only, no cleartext
+connection is possible. The encryption setting must match what is configured
+at the OpenVAS server (openvassd.conf: ssl_version=). If there is no entry in
+openvassd.conf, default is 'TLSv1'.
+    </p>
+    <p>
+Username: This is the user configured in the OpenVAS server. A default user is
+set at compile time to correspond with a default server. It can be overwritten
+with any valid scanner username. For information on how to set up a openvassd
+user, see the manual for the 'openvas-adduser' command.
+    </p>
+    <p>
+Password: This is the OpenVAS user login password. Security warning: Although
+the password is encrypted between INOVASC and the OpenVAS daemon, it 
+is part of the argument hand-off between cgi's (although not visible in the
+URL through the POST method. This could need improvement. Maybe by means of
+a cookie? Would a SSL session alone be enough for protection? Your ideas are
+welcome).
+    </p>
+    <p>
+Certificate: INOVASC also supports user authentication with a client
+certificate. This client certificate name is currently set at compile time.
+If you use password authentication, select 'None (use pass)' from the list.
+According to the current OpenVAS communication protocol, a password *must* be
+set and presented to the OpenVAS server. But it s now a random value, I
+usually use five stars '*****'.
+Client cert authentication has the same security concerns, as knowlegde of
+the certificate name is as good as the password. Read more in section 6.
+    </p>
+    <h3>2. Configure the OpenVAS scanner server for a new scan</h3>
+    <hr>
+    <p>
+After the successful login, OpenVAS sends a full set of configuration data.
+The data of available plugins is sorted and displayed in a table of plugin
+families. A checkbox in front of the family name enables a particular family.
+The number after the family is the number of plugins belonging to it.
+Be careful what and how much to enable. Besides that certain plugins have the
+potential to 'crash' the scan target, a scan with lot's of plugins and
+multiple targets can create considerable stress to networks. Enabling
+everything will also *substantially* increase the scan time. OpenVAS comes
+with an enormous number of plugins. Although some have a certain intelligence
+through dependencies, often they just probe nonexistent services were OpenVAS
+needs to wait for the network timeout before it can move on. These seconds
+and minutes add up and you'll risk a timeout error!
+The latest plugin addition to OpenVAS are so-called 'Local Security' checks
+that verify a systems patch level. These plugins work only if OpenVAS is
+able to log into the system (currently only via secure shell with passwordless
+public/private key authentication). Please enable these checks only if that is
+correctly set up with your target system.
+My advice is to start easy with say the 'General' section plugin group and
+add other groups as necessary.
+    </p>
+    <p>
+Above the plugin family selection is were the scan target system IP address
+needs to be specified. Although a netmask field is available and suggests the
+possibility to scan a network, this feature is not yet implemented. Currently,
+INOVASC scans a single host IP only and ignores the netmask field.
+    </p>
+    <p>
+
+By click on the 'Scan' button, INOVASC logs on to OpenVAS again and starts the
+scan, enabling the plugins from the selected plugin families. It then updates
+the scan status html page, which forwards to the results html page once the
+scan is complete.
+    </p>
+    <h3>3. Using Scan Templates</h3>
+    <hr>
+    <p>
+Scan templates are scan configuration files containing a list of plugins,
+their preferences and "enabled" status. They allow a fine-grained scan
+configuration to enable or disable single plugins rather then whole plugin
+families.
+A scan template can be generated after a normal scanner login with INOVASC
+at the scan configuration page.
+The template file generation in INOVASC is limited to a maximum of 999 files.
+    </p>
+    <p>
+Once a template is selected for scanning, the OpenVAS login screen comes
+up to ask for the OpenVAS server login. After that, the scan configuration
+display highlights plugin families were at least one plugin has been
+selected and asks for the target IP address to scan. Then, start the scan
+as usual.
+    </p>
+    <h3>4. Scheduled scanning</h3>
+    <hr>
+    <p>
+Scans with a scan template can be scheduled using wget with a crontab entry.
+Here is a working example: Run a scan each saturday for host 192.168.11.110
+with template "Windows Systems" (is template-003.rc)
+    </p>
+    <p>
+Add to the crontab of the webserver user (i.e. wwwrun) a line like this:
+    </p>
+<pre><code>11 8 * * 6  wget http://localhost/inovasc/cgi-bin/"scanprocess.cgi
+?ip=127.0.0.1&port=9391&encr=TLSv1&user=fm&pass=test&cert=none
+&t-ip=192.168.11.110&t-mask=255.255.255.255&template=template-003.rc"'
+> /dev/null 2>&1</code></pre>
+    <p>
+(make sure to remove the newlines in the crontab).
+    </p>
+    <h3>5. Most common errors:</h3>
+    <hr>
+    <p>
+SSL connection errors, example 1: Error SSL_connect during SSL handshake.
+Reason: Operation not permitted.
+    </p>
+    <p>
+Check that all certificates match: client certificate and openvassd server
+certificate are signed by the same CA certificate and the client has the
+correct CA certificate available. The error also occurs when a certificate
+has been expired.
+    </p>
+    <p>
+SSL connection errors, example 2: Error SSL_connect() during SSL handshake.
+0 Input/output error || 0 No such device or address
+    </p>
+    <p>
+SSL connection errors, example 3: Error connecting to OpenVAS server [ip] port
+on [num].
+    </p>
+    <p>
+Either the remote OpenVAS server is down, firewalled, just starting up loading
+its plugins - or the host is just simply not reachable or doesn't even exist.
+    </p>
+    <p>
+Other connection errors, example 4: Can't login to OpenVAS server.
+    </p>
+    <p>
+Either your OpenVAS username or password is wrong or the OpenVAS user does not
+exist. You will also see a 'Bad login attempt' message  in the OpenVAS server
+log.
+    </p>
+    <p>
+Scan configuration errors, example 1: No plugin family has been selected.
+    </p>
+    <p>
+You forgot to select at least one plugin family.
+    </p>
+    <p>
+Scan configuration errors, example 2: These hosts could not be tested
+because you are not allowed to do so.
+    </p>
+    <p>
+A scan server ruleset prevents you from scanning that particular host/
+network. Check the scan server user rules configuration.
+    </p>
+    <p>
+
+Scan process errors: If a scan is taking too long, the webserver can and will
+cut the connection through a timeout. When this happens, the web client didn't
+write a result page and forwards to an nonexisting document with error 404.
+    </p>
+    <p>
+
+Increasing the timeout on the web server makes sense as scans can easily take
+longer than the defaults. For the Apache web server, I increased the standard
+timeout from 300 (seconds, equals 5 minutes) to 1800 (half an hour).
+    </p>
+    <p>
+
+INOVASC Client Error: max number of plugins exhausted (30000).
+    </p>
+    <p>
+
+The max number of plugins is set in inovasc.h. With the OpenVAS plugin list
+constantly growing, it can easily exceeding INOVASC's internal limitation.
+This limit can be increased, i.e. #define MAXPLUGS 40000 followed by a recompilation.
+    </p>
+    <h3>6. Restrictions and more security concerns</h3>
+    <hr>
+    <p>
+In the INOVASC software version I run online, the default user 'guest' 
+is restricted to only be able to scan localhost and the official IP address
+of my web server.
+You are free to set the OpenVAS server and user name to your own system and
+scan with the limited or unlimited abilities of *your own* OpenVAS daemon.
+You'll be responsible for the scans originating from your OpenVAS daemon,
+since this software only provides the ability to configure and start a scan
+that is ultimately executed and traceable to the OpenVAS daemon IP itself.
+    </p>
+    <p>
+Also, the generated scan results on this server are open to public review.
+Should that be a concern, feel free to download, configure and compile the
+source on your own system were you can control and restrict access to this
+scanner interface and/or the results, which is highly advisable.
+    </p>
+    <h3>7. Supported Versions</h3>
+    <hr>
+    <p>
+INOVASC has been reported running on all major Linux distributions and
+Apple's OS X. It works with all OpenVAS servers from version 4 up.
+    </p>
+    <h3>8. Additional Notes</h3>
+    <hr>
+    <p>
+Users of Fedora Core 4 (FC4) and up please watch out for the SELinux
+functionality now enabled by default. It will stop the Apache daemon
+from opening a network socket. The error you will get is:
+ Error connecting to OpenVAS server [ip] port [num].
+... even if your opnvassd daemon is running on the localhost.
+    </p>
+    <p>
+Happy Scanning!
+Frank
+    </p>

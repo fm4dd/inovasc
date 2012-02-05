@@ -1,0 +1,464 @@
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="style/style.css" media="screen" />
+<meta name="Title" content="INOVASC - Installation Instructions" />
+<meta name="Description" content="The installation instructions INOVASC, the opensource web client for OpenVAS." />
+<meta name="Keywords" content="OpenVAS, Vulnerability Assessment, scanner, audit, INOVASC" />
+<meta name="Classification" content="IT Security" />
+<title>INOVASC - Installation</title>
+</head>
+<body>
+<div id="wrapper">
+<div id="banner">
+    <h1>INOVASC Installation Instructions</h1>
+    <h2>The web client for the OpenVAS Security Scanner</h2>
+</div>
+<div id="vmenu">
+<ul>
+<li><a href="../inovasc" class="selected"><span>Home</span></a></li>
+<li><a href="cgi-bin/scantemplates.cgi"><span>Scan Templates</span></a></li>
+<li><a href="cgi-bin/scanlogin.cgi"><span>Direct Scan</span></a></li>
+<li><a href="cgi-bin/scanresults.cgi"><span>List existing Results</span></a></li>
+<li><a href="cgi-bin/help.cgi"><span>Help</span></a></li>
+<li><a href="cgi-bin/about.cgi"><span>About</span></a></li>
+</ul>
+</div>
+<div id="content">
+
+    <h3>Assumptions</h3>
+    <hr>
+    <p>
+You just downloaded the software package and looked into the README.
+You want to install inovasc into "/var/www/html" instead of my
+"/home/htdocs/frank4dd.com" path and you would like to change the
+standard user name from "guest" to "gric". Here is what you should
+do in order to make it all work.
+    </p>
+    <h3>1. Download and extract the software package</h3>
+    <hr>
+    <p>
+First, after un-tarring the software package, change the software
+source package config files to match your setup [line numbers are in brackets]:
+    </p>
+    <p>
+Edit one line in the toplevel Makefile of inovasc-v1.2.4 to set the software home directory on your machine.
+    </p>
+<pre><code>vi /tmp/inovasc-v1.2.4/Makefile
+
+[6]     BASEDIR=/var/www/html</code></pre>
+    <p>
+Next, edit one line in the src/ directory Makefile of inovasc-v1.2.4 to set the CGI directory for the application
+    </p>
+<pre><code>vi /tmp/inovasc-v1.2.4/src/Makefile
+
+[11]    CGIDIR=/var/www/html/inovasc/cgi-bin</code></pre>
+    <p>
+Now we set four lines in inovasc-v1.2/src/inovasc.h:
+    </p>
+<pre><code>[21]	#define USERNAME        "gric"
+...
+[24]	#define PASSWORD        "gric"
+...
+[30]	#define CLIENT_CERT     "cert_gric.pem"
+[31]	#define CLIENT_PRIVKEY  "../etc/key_gric.pem</code></pre>
+    <h3>3. Compile and install the software</h3>
+    <hr>
+    <p>
+As root, run "make" and "make install". This should create the necessary directory structure and copy all required files into place. For comparison, the installation in our example should look like this (please compare carefully):
+    </p>
+<pre><code>susie:/home/fm/inovasc-v1.2.4 # ls -lR /var/www/html/inovasc
+   
+   /var/www/html/inovasc:
+   total 4
+   drwxr-xr-x    6 root     root          200 2012-01-10 01:29 .
+   drwxr-xr-x    3 root     root           72 2012-01-10 01:29 ..
+   drwxr-xr-x    2 root     root          288 2012-01-10 01:44 cgi-bin
+   drwxr-xr-x    2 root     root          168 2012-01-10 01:29 etc
+   drwxr-xr-x    2 root     root          192 2012-01-10 01:29 images
+   -rwxr-xr-x    1 root     root          357 2012-01-10 01:44 index.htm
+   drwxrwxr-x    2 root     www            48 2012-01-10 01:34 results
+   drwxr-xr-x    2 root     root           80 2012-01-10 01:29 style
+   drwxrwxr-x    2 root     www            48 2012-01-10 01:34 templates
+   
+   /var/www/html/inovasc/cgi-bin:
+   total 272
+   drwxr-xr-x    2 root     root          288 2012-01-10 01:44 .
+   drwxr-xr-x    6 root     root          200 2012-01-10 01:29 ..
+   -rwxr-xr-x    1 root     root        28828 2012-01-10 01:44 about.cgi
+   -rwxr-xr-x    1 root     root        30780 2012-01-10 01:44 help.cgi
+   -rwxr-xr-x    1 root     root        55772 2012-01-10 01:44 scanconfig.cgi
+   -rwxr-xr-x    1 root     root        31296 2012-01-10 01:44 scanlogin.cgi
+   -rwxr-xr-x    1 root     root        52668 2012-01-10 01:44 scanprocess.cgi
+   -rwxr-xr-x    1 root     root        55804 2012-01-10 01:44 scanresults.cgi
+   
+   /var/www/html/inovasc/etc:
+   total 16
+   drwxr-xr-x    2 root     root          168 2012-01-10 01:29 .
+   drwxr-xr-x    6 root     root          200 2012-01-10 01:29 ..
+   -rw-r--r--    1 root     root         1354 2012-01-10 01:44 cacert.pem
+   -rw-r--r--    1 root     root         4014 2012-01-10 01:44 cert_guest.pem
+   -rw-r--r--    1 root     root          891 2012-01-10 01:44 key_guest.pem
+   -rw-r--r--    1 root     root          147 2012-01-10 01:44 README
+     
+   /var/www/html/inovasc/images:
+   total 44
+   drwxr-xr-x    2 root     root          192 2012-01-10 01:29 .
+   drwxr-xr-x    6 root     root          200 2012-01-10 01:29 ..
+   -rwxr-xr-x    1 root     root        31476 2012-01-10 01:44 inovasc.gif
+   -rwxr-xr-x    1 root     root         2745 2012-01-10 01:44 inovasc-icon.gif
+   -rwxr-xr-x    1 root     root         2745 2012-01-10 01:44 inovasc-logo.gif
+   -rwxr-xr-x    1 root     root          823 2012-01-10 01:44 progressbar.gif
+
+   /var/www/html/inovasc/results:
+   total 0
+   drwxrwxr-x    2 root     www           48 2012-01-10 01:34 .
+   drwxr-xr-x    7 root     root         200 2012-01-10 01:29 ..
+     
+   /var/www/html/inovasc/style:
+   total 4
+   drwxr-xr-x    2 root     root           80 2012-01-10 01:29 .
+   drwxr-xr-x    6 root     root          200 2012-01-10 01:29 ..
+   -rwxr-xr-x    1 root     root          777 2012-01-10 01:44 style.css
+
+   /var/www/html/inovasc/templates:
+   total 652
+   -rw-r--r--    1 root     root       75379 2012-01-18 01:00 template-001.rc
+   -rw-r--r--    1 root     root       71474 2012-01-18 01:00 template-002.rc
+   -rw-r--r--    1 root     root       71727 2012-01-18 01:00 template-003.rc
+   -rw-r--r--    1 root     root       72183 2012-01-18 01:00 template-004.rc
+   -rw-r--r--    1 root     root       71462 2012-01-18 01:00 template-005.rc
+   -rw-r--r--    1 root     root       72361 2012-01-18 01:00 template-006.rc
+   -rw-r--r--    1 root     root       71419 2012-01-18 01:00 template-007.rc
+   -rw-r--r--    1 root     root       71362 2012-01-18 01:00 template-008.rc
+   -rw-r--r--    1 root     root       71810 2012-01-18 05:11 template-009.rc</code></pre>
+    <p>
+Make sure that the results and templates directory are be writeable to the webserver.
+    </p>
+    <h3>4. Update the webserver configuration</h3>
+    <hr>
+    <p>
+After the installation, check the webserver configuration and declare
+the alias for /inovasc/cgi-bin/ to match /var/www/html/inovasc/cgi-bin/.
+Depending on the webserver configuration, we also want to disable the CGI
+buffering for a specific CGI in order to see the scan progress after launching our scan.
+Buffering could happen if server-side includes (SSI) is used, or if
+compression is enabled for delivering HTML output (mod_deflate).
+    </p>
+<pre><code>ScriptAlias /inovasc/cgi-bin/   "/var/www/html/inovasc/cgi-bin/"
+&lt;Directory "/var/www/html/inovasc/cgi-bin"&gt;
+   Options -IncludesNOEXEC -Includes
+   SetEnvIfNoCase Request_URI "scanprocess\.cgi" no-gzip dont-vary
+&lt;/Directory&gt;</code></pre>
+    <p>
+Restart the webserver and check if the scanlogin.cgi page comes up properly.
+Assuming the webservers document root is in /var/www/html, we point the
+browser to http://[webserver-ip-or-name]/inovasc/ and we'll be forwarded to the
+scanlogin.cgi login screen. If so, we can move forward to test the
+communication with OpenVAS.
+    </p>
+    <h3>5. Check the connection to the Scan server</h3>
+    <hr>
+    <p>
+Before we even start to look at the certificates, we should first
+check if the SSL connection between INOVASC and the OpenVAS scan daemon works
+in general, using password authentication instead of certificates.
+To do that, lets add a standard scan user:
+     </p>
+<pre><code>fm@susie:~> su
+Password:
+
+susie:/home/fm # /srv/app/openvas/sbin/openvas-adduser 
+Using /var/tmp as a temporary file holder.
+
+Add a new openvassd user
+---------------------------------
+     
+Login : test1
+Authentication (pass/cert) [pass] :
+Login password : testpass1
+Login password (again) : testpass1
+     
+User rules
+----------
+openvassd has a rules system which allows you to restrict the hosts
+that test1 has the right to test. For instance, you may want
+him to be able to scan his own host only.
+  
+Please see the openvas-adduser(8) man page for the rules syntax
+     
+Enter the rules for this user, and hit ctrl-D once you are done :
+(the user can have an empty rules set)
+     
+     
+Login             : test1
+Password          : ***********
+DN                :
+Rules             :
+     
+     
+Is that ok ? (y/n) [y]
+user added.
+susie:/home/fm #</code></pre>
+    <p>
+The new user should work immediately without re-starting the scan daemon.
+Now, let's verify INOVASC with this new user and password. Open the browser
+and wait untill the scanlogin.cgi page comes up. Then enter:
+    </p>
+    <ul>
+      <li>IP Address:	127.0.0.1 [leave entry alone]</li>
+      <li>Service Port:	9391 [leave entry alone]</li>
+      <li>Encryption:	TLSv1 [leave entry alone]</li>
+      <li>User Name:		test1 [change to this new user]</li>
+      <li>Password:		testpass1 [change to this password]</li>
+      <li>Certificate:	None (use pass) [change to this setting]</li>
+    </ul>
+    <p>
+Now, click [Continue].
+    </p>
+    <p>
+The login SHOULD BE SUCCESSFUL and the scanconfig.cgi page should be loaded
+after a moment of communication with the scan daemon. A moment can in fact mean several seconds up to half a minute, please be patient.
+    </p>
+    <h3>6. Possible connection errors</h3>
+    <hr>
+    <p>
+If you get the error "** inovasc.c:222 Can't login to scan server",
+hit BACK and check/re-enter again the username password as you probably
+miss-typed the password.
+Or, just to make sure, restart openvassd (although that should NOT be
+necessary). Remember to wait until openvassd is ready and loaded all plugins,
+which takes quite some time.
+    </p>
+    <p>
+If you get the error "** inovasc.c:164 Error SSL_connect() during SSL
+handshake. 0 Operation not permitted.",  there is a missmatch in the
+SSL enryption protocol, check that they match on both sides and
+try again. Do not go any further until the login without a certificate
+works fine.
+    </p>
+    <h3>7. Setup the certificate-based Scan Server login</h3>
+    <hr>
+    <p>
+After successfully logging in with a standard openvassd username/password,
+we can progress by setting up the scanner login using a client certificate.
+We assume the command "openvas-mkcert" had been run already and the
+openvassd daemon certificate authority files are generated.
+    </p>
+    <p>
+Start generating a client certificate with the command "openvas-mkcert-client":
+    </p>
+<pre><code> susie114:~ # /srv/app/openvas/sbin/openvas-mkcert-client
+This script will now ask you the relevant information to create the SSL client certificates for OpenVAS.
+
+Client certificates life time in days [365]: 1825
+Your country (two letter code) [DE]: JP
+Your state or province name [none]: Tokyo
+Your location (e.g. town) [Berlin]: Setagaya  
+Your organization [none]: Frank4DD
+Your organizational unit [none]: 
+**********
+We are going to ask you some question for each client certificate. 
+
+If some question has a default answer, you can force an empty answer by entering a single dot '.'
+
+*********
+OpenVAS username for the new user: guest
+Client certificates life time in days [1825]: 
+Country (two letter code) [JP]: 
+State or province name [Tokyo]: 
+Location (e.g. town) [Setagaya]: 
+Organization [Frank4DD]: 
+Organization unit []: Support
+e-Mail []: support@frank4dd.com
+Generating RSA private key, 1024 bit long modulus
+...............++++++
+.....++++++
+e is 65537 (0x10001)
+You are about to be asked to enter information that will be incorporated
+into your certificate request.
+What you are about to enter is what is called a Distinguished Name or a DN.
+There are quite a few fields but you can leave some blank
+For some fields there will be a default value,
+If you enter '.', the field will be left blank.
+-----
+Country Name (2 letter code) [DE]:State or Province Name (full name) [Some-State]:Locality Name (eg, city) []:Organization Name (eg, company) [Internet Widgits Pty Ltd]:Organizational Unit Name (eg, section) []:Common Name (eg, your name or your server's hostname) []:Email Address []:Using configuration from /tmp/openvas-mkcert-client.9118/stdC.cnf
+Check that the request matches the signature
+Signature ok
+The Subject's Distinguished Name is as follows
+countryName           :PRINTABLE:'JP'
+stateOrProvinceName   :PRINTABLE:'Tokyo'
+localityName          :PRINTABLE:'Setagaya'
+organizationName      :PRINTABLE:'Frank4DD'
+organizationalUnitName:PRINTABLE:'Support'
+commonName            :PRINTABLE:'guest'
+emailAddress          :IA5STRING:'support@frank4dd.com'
+Certificate is to be certified until Jan 22 04:02:26 2017 GMT (1825 days)
+
+Write out database with 1 new entries
+Data Base Updated
+
+User rules
+----------
+openvassd has a rules system which allows you to restrict the hosts that  has the right to test.
+For instance, you may want him to be able to scan his own host only.
+
+Please see the openvas-adduser(8) man page for the rules syntax.
+
+Enter the rules for this user, and hit ctrl-D once you are done:
+(the user can have an empty rules set)
+
+User guest added to OpenVAS.
+
+Your client certificates are in /tmp/openvas-mkcert-client.9118 .
+You will have to copy them by hand.</code></pre>
+    <p>
+Now clear out the dummy entries in "inovasc/etc". 
+    </p>
+<pre><code>susie:/home/fm # cd /var/www/html/inovasc/etc/
+susie:/var/www/html/inovasc/etc # ls
+.  ..  cacert.pem  cert_guest.pem  key_guest.pem  README
+    
+susie:/var/www/html/inovasc/etc # rm *.pem</code></pre>
+    <p>
+If not already copied, we copy now the OpenVAS CA certificate there:
+    </p>
+<pre><code>susie:/var/www/html/inovasc/etc # cp /srv/app/openvas/var/lib/openvas/CA/cacert.pem .</code></pre>
+    <p>
+Next, copy the following files from "/tmp/openvas-mkcert-client.9118" to the
+"inovasc/etc" directory:
+    <p> 
+<pre><code>susie:/var/www/html/inovasc/etc # cp /tmp/openvas-mkcert-client.9118/cert_gric.pem .
+susie:/var/www/html/inovasc/etc # cp /tmp/openvas-mkcert-client.9118/key_gric.pem .</code></pre>
+   <p>   
+The "inovasc/etc" directory should now look like this:
+    </p>
+<pre><code>susie:/var/www/html/inovasc/etc # ls -l
+   total 16
+   drwxr-xr-x    2 root     root          168 2012-01-10 01:51 .
+   drwxr-xr-x    6 root     root          176 2012-01-10 01:29 ..
+   -rw-r--r--    1 root     root         1354 2012-01-10 01:50 cacert.pem
+   -rw-r--r--    1 root     root         3844 2012-01-10 01:51 cert_gric.pem
+   -rw-------    1 root     root          887 2012-01-10 01:51 key_gric.pem
+   -rw-r--r--    1 root     root          147 2012-01-10 01:44 README</code></pre>
+   <p> 
+We need to fix the file permissions for key_gric.pem to make it readable
+for the webserver:
+    </p>
+<pre><code>susie:/var/www/html/inovasc/etc # chmod 644 key_gric.pem
+   susie:/var/www/html/inovasc/etc # ls -l
+   total 16
+   drwxr-xr-x    2 root     root          168 2012-01-10 01:51 .
+   drwxr-xr-x    6 root     root          176 2012-01-10 01:29 ..
+   -rw-r--r--    1 root     root         1354 2012-01-10 01:50 cacert.pem
+   -rw-r--r--    1 root     root         3844 2012-01-10 01:51 cert_gric.pem
+   -rw-r--r--    1 root     root          887 2012-01-10 01:51 key_gric.pem
+   -rw-r--r--    1 root     root          147 2012-01-10 01:44 README
+   susie:/var/www/html/inovasc/etc #</code></pre>
+   <p>
+Now we are ready to test the login with a user specific certificate. Go to
+the scanlogin.cgi page and RELOAD, your page should look like this:
+    </p>
+    <ul>
+      <li>IP Address:	127.0.0.1
+      <li>Service Port:	9391
+      <li>Encryption:	TLSv1
+      <li>User Name:		gric
+      <li>Password:		**** (gric)
+      <li>Certificate:	cert_gric.pem
+    </ul>
+    <p>
+Now, press [Continue] again. The login SHOULD WORK with the scanconfig.cgi page
+coming up after a while of communication with the scan server.
+    </p>
+    <h3>8. The first test scan</h3>
+    <hr>
+    <p>
+Now we are ready to do our first scan. Still at the scanconfig.cgi page,
+select the "General" section from the Scanners Plugin List. The "General"
+plugins will finish fairly quickly while providing a good coverage so 
+some results should come up. Once you click "Start Scan" above the plugin
+selection table, you should be forwarded to the scanprocess.cgi page.
+    </p>
+    <p>
+Here, the most common errors are:
+    </p>
+    <p>
+"** inovasc.c:711 Could not start writing the updates file."
+Check the file permissions on the "inovasc/results" directory and make it
+writeable to the webserver.
+    </p>
+    <p>
+"** scanprocess.c:112 No plugin family selected."
+Well, someone clicked "Start Scan" without selecting at least one plugin
+family.
+    </p>
+    <h3>9. Scan progress and results</h3>
+    <hr>
+    <p>
+Monitor the scan progress and wait for the forward to the results 
+page session-xxx.html. There is nothing much that can go wrong at this
+point. If a exotic plugin family is selected, chances are that the results
+page session-xxx.html has no results. Or, the scan server has a rule
+denying the scan of the selected IP address and the results page will have
+the openvassd error message "Can't scan IP XYZ because you are not allowed
+to do so." in it.
+    </p>
+    <p>
+Once your first scan was sucessful, you can go to scanresults.cgi via
+the top menu and list all your scans there.
+    </p>
+    <p>
+Enjoy INOVASC!
+    </p>
+    <h3>Contact and Comments</h3>
+    <hr>
+    <p>
+Please let me know if these instructions are OK to follow and at which stage
+you run into a problem - or if something isn't made clear. It will help me
+improve this documentation.
+    </p>
+    <p>
+Thank You!<br>
+Frank
+    </p>
+    <p>
+Please send your comments and complaints to: support[at]frank4dd.com
+and if you want to do something really nice and encouraging besides
+saying "Thanks", send me a photo picture of the area you are living in,
+either your town, your local sights or of your neighborhood. I enjoy
+collecting pictures from all over the world, maybe I'll start a gallery.
+    </p>
+    <h3>Thanks and Credits</h3>
+    <hr>
+    <p>
+To the OpenVAS team for continuing the development after Nessus went commercial,
+and to the countless developers whose work went into the libaries used here.
+    </p>
+  </div>
+<div id="sidecontent">
+<h4>Topics</h4>
+<ul>
+<li><a href="cgi-bin/about.cgi">About INOVASC</a></li>
+<li><a href="install.htm">Installation</a></li>
+<li><a href="changelog.htm">Changelog</a></li>
+</ul>
+<p>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6688183504093504";
+/* Software Development 120x240 */
+google_ad_slot = "5909269769";
+google_ad_width = 120;
+google_ad_height = 240;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+</div>
+<div id="footer">
+<span class="left">&copy; INOVASC v1.2.4 (01/20/2012) by <a href="http://www.frank4dd.com/">Frank4DD</a> - licensed under GPL.</span>
+</div>
+</div>
+</body>
+</html>

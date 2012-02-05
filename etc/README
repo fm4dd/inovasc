@@ -1,0 +1,3 @@
+nessus client certificates and the CA certificate that signed
+the nessus server, go in here. The ones provided are dummies,
+replace with your own.

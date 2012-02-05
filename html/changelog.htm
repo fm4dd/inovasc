@@ -1,0 +1,183 @@
+<html>
+<head>
+<title>Changelog for INOVASC - OpenVAS Web-based scan client</title>
+<link rel="stylesheet" type="text/css" href="style/style.css" media="screen" />
+<meta name="Title" content="NessusWC - Changelog" />
+<meta name="Description" content="This is the version change log for INOVASC, the opensource web client for OpenVAS." />
+<meta name="Keywords" content="OpenVAS, vulnerability, scan, web, client, INOVASC" />
+<meta name="Classification" content="IT Security" />
+</head>
+<body>
+<div id="wrapper">
+  <div id="banner">
+    <h1>INOVASC - ChangeLog</h1>
+    <h2>The web client for the OpenVAS security Scanner</h2>
+  </div>
+<div id="vmenu">
+<ul>
+<li><a href="../inovasc" class="selected"><span>Home</span></a></li>
+<li><a href="cgi-bin/scantemplates.cgi"><span>Scan Templates</span></a></li>
+<li><a href="cgi-bin/scanlogin.cgi"><span>Direct Scan</span></a></li>
+<li><a href="cgi-bin/scanresults.cgi"><span>List existing Results</span></a></li>
+<li><a href="cgi-bin/help.cgi"><span>Help</span></a></li>
+<li><a href="cgi-bin/about.cgi"><span>About</span></a></li>
+</ul>
+</div>
+  <div id="content">
+    <h3>2012-01-09: Project renaming to INOVASC, version up to 1.2.4</h3>
+    <hr>
+    <p>
+- Re-coding to support OpenVAS instead of Nessus. Implementation
+  of the OpenVAS scanner protocl OTP 1.0, dropping support for
+  Nessus NTP 1.2. Renaming the software from NessusWC (Nessus
+  Web Client) to INOVASC (Independend OpenVAS Client).
+    </p>
+    <p>
+- Implemented scan credentials for executing check directly on the
+  remote system. Currently, SSH and SMB with username/password is
+  possible.
+    </p>
+    <p>
+- Web-layout re-design for a more modern look and feel. Adding a
+  scan summary to the scan report.
+    </p>
+    <p>
+- Implementation of a decent protocol and plugin debugging.
+    </p>
+    <h3>2008-03-20: Version number bumped to v1.2.2 for minor bugfix:</h3>
+    <hr>
+    <p>
+- Implemented correct error handling when the nessus server plugin list
+  exhausts the max number of plugins defined in NessusWC. I also raised
+  the default value from 20000 to 40000.
+    <p>
+    <h3>2007-09-18: Version number bumped to v1.2.1 for minor changes:</h3>
+    <hr>
+    <p>
+- fixed wrong page count for scanresults.cgi. When the number of certs
+  is divisible through the max. entries per page without remainder,
+  meaning that all pages are filled to the max, a extra empty page was
+  generated.
+    <p>
+- The results file has been updated to highlight the Nessus Risk factor
+  rating. The risk rating is now set in bold font, whith the risk result
+  colored according to criticality. 
+    <p>
+- verified functionality with latest Nessus version 2.2.10.
+    <p>
+- fixed the display bug that occured when NessusWC is used with Nessus
+  user and password where the password contains HTML reserved characters.
+  cgic's cgiHtmlEscape prevents it. Thanks go to Marcelo for reporting.
+    <h3>2005-07-15: Version number bumped to v1.2 with new functionality:</h3>
+    <hr>
+    <p>
+- Introduction of scan templates. Scan templates allow to define a scan
+  configuration (the list of enabled plugins) under a template name.
+  Scans now can be easier standardized and repeated (i.e. to check for
+  compliance).
+  The template file format is identical to the NessusWX windows client
+  program. Session configuration files exported from NessusWX can be
+  copied into the templates directory and used without changes.
+  The following example templates are included:
+    <p>
+    <ul>
+      <li>Sans Top-20</li>
+      <li>Database Systems</li>
+      <li>E-Mail Services</li>
+      <li>Web Services</li>
+      <li>Network Equipment</li>
+      <li>Unix Systems</li>
+      <li>Windows Systems</li>
+      <li>General Services</li>
+      <li>Everything</li>
+    </ul>
+    <p>
+  Scan templates can also be generated from within NessusWC by selecting
+  appropriate plugin families.
+    <p>
+- Verifying scheduled Scans with a scan template, example: Run a scan each
+  saturday for host 192.168.11.110 with template "Windows Systems"
+  (is template-003.rc)
+  add to the crontab of the webserver user (wwwrun) a line like:
+    <p>
+47 7 * * 6  wget http://localhost/nessuswc/cgi-bin/"scanprocess.cgi?nessusd-ip=127.0.0.1&nessusd-port=1241&nessusd-encr=SSLv3&nessusd-user=fm&nessusd-pass=test&nessusd-cert=none&t-ip=192.168.11.110&t-mask=255.255.255.255&template=template-003.rc" > /dev/null 2>&1
+    <p>
+- updated the help with details about scan templates and scheduled scans
+    </p>
+    <h3>2005-03-13:</h3>
+    <hr>
+    <p>
+New functionality:
+    <p>
+- The biggest update is the implementation of a real-time scan progress
+  window in scanprocess.cgi. The window opens as a popup on request
+  through the "Show Scan Process Details" button. It shows the current
+  scan process while constantly refreshing itself until the scan is done.
+    <p>
+- I re-wrote scanresult.cgi to display scan results sorted by scan time.
+  Latest scans now appear first by default and it can be switched to show
+  oldest first. Eventually, alternate sorting by IP could be implemented,
+  also.
+    <p>
+  A Sanity check is now implemented to correctly error on nonexisting page
+  numbers for the cgi call (i.e. more then really exist or negative numbers).
+    <p>
+- Generated and added the scan duration time to the scan result output page
+  (see bottom).
+    <p>
+Bug Fixes:
+    <p>
+- Selecting the Port Scanner family resulted in firing up all 8 port scanners
+  that clogged up the whole scan. Until the implementaton of single plugin
+  configuration, a workaround is a hardcoded to select of only these plugins:
+  the NMAP portscan/RPC scan (ID 14259), the Ping plugin (ID 10180) and the
+  tcp connect() scan (ID 10335). The workaround can be disabled by removing
+  the definition of PORTSCAN_WORKAROUND in nessuswc.h.
+    <p>
+    <h3>2005-03-04:</h3>
+    <hr>
+    <p>
+- Fixed the column display error in scanconfig.cgi that occurs when the
+  number of plugin families is uneven. (With the latest nessus plugin
+  update on the server, the new total is 5833 plugins in 37 families).
+    <p>
+- Set cgi calling method to "POST" were appropriate. This prevents displaying
+  the CGI calling data in the URL.
+    <p>
+- Updated help.txt and README for common compile errors and were to configure
+  default nessus login settings
+    <p>
+- cleaned out the doc/ directory, removing nessus client dump files and
+  general C-programming literature
+    <p>
+    <h3>2005-02-17:</h3>
+    <hr>
+- Initial release on freshmeat.net
+  </div>
+<div id="sidecontent">
+<h4>Topics</h4>
+<ul>
+<li><a href="cgi-bin/about.cgi">About INOVASC</a></li>
+<li><a href="install.htm">Installation</a></li>
+<li><a href="changelog.htm">Changelog</a></li>
+</ul>
+<p>
+<script type="text/javascript"><!--
+google_ad_client = "pub-6688183504093504";
+/* Software Development 120x240 */
+google_ad_slot = "5909269769";
+google_ad_width = 120;
+google_ad_height = 240;
+//-->
+</script>
+<script type="text/javascript"
+src="http://pagead2.googlesyndication.com/pagead/show_ads.js">
+</script>
+</p>
+</div>
+<div id="footer">
+<span class="left">&copy; INOVASC v1.2.4 (01/20/2012) by <a href="http://www.frank4dd.com/">Frank4DD</a> - licensed under GPL.</span>
+</div>
+</div>
+</body>
+</html>

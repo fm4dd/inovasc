@@ -1,0 +1,265 @@
+There are 2 different ways to create a client certificate and add it to
+the server.
+
+1.) Using nessus-adduser and OpenSSL with tools like CA.pl to generate 
+    the client cert.  This also means to generate the nessus daemon server
+    cert and copy the following: CA cert and generated nessus server cert
+    to <nessus-home>/com/CA. The 2 files should be called cacert.pem and
+    servercert.pem but that can be changed in nessusd.conf:
+
+cert_file=/home/nessus/com/nessus/CA/servercert.pem
+key_file=/home/nessus/var/nessus/CA/serverkey.pem
+ca_file=/home/nessus/com/nessus/CA/cacert.pem
+
+    copy the certificate private key files to <nessus-home>/var/nessus/CA
+    and name them cakey.pem and serverkey.pem. Although cakey.pem is not
+    (yet?) configured in nessusd.conf, it is used by nessus-mkcert-client.
+    Both keys are expected to have no password attached and are in pem format.
+    Sometimes, certificate and private key are in a single file. That is
+    no problem as the SSL file load functions are clever enough to only read
+    the related lines between the "---" markers. As a result, some client
+    programs such as NessusWX do not have a specification for the key file
+    and they read everything out of one file.
+
+/* ------------------------------------------------------------------------ *
+ *                        SERVER SIDE CONFIGURATION                         * 
+ * ------------------------------------------------------------------------ *
+ * root@toshi:/home/nessus/sbin # ./nessus-adduser                          * 
+ * Using /var/tmp as a temporary file holder                                * 
+ *                                                                          * 
+ * Add a new nessusd user                                                   * 
+ * ----------------------                                                   * 
+ *                                                                          * 
+ *                                                                          * 
+ * Login : fm3                                                              * 
+ * Authentication (pass/cert) [pass] : cert                                 * 
+ * Please enter User Distinguished Name:                                    * 
+ * Country: US                                                              * 
+ * STate: CA                                                                * 
+ * Location: Rocklin                                                        * 
+ * Organization: Frank4DD                                                   * 
+ * Organizational Unit: nessus-client                                       * 
+ * Common Name: fm3                                                         * 
+ * e-Mail: fm3@192.168.11.8                                                 * 
+ *                                                                          * 
+ * User rules                                                               * 
+ * ----------                                                               * 
+ * nessusd has a rules system which allows you to restrict the hosts        * 
+ * that fm3 has the right to test. For instance, you may want               * 
+ * him to be able to scan his own host only.                                * 
+ *                                                                          * 
+ * Please see the nessus-adduser(8) man page for the rules syntax           * 
+ *                                                                          * 
+ * Enter the rules for this user, and hit ctrl-D once you are done :        * 
+ * (the user can have an empty rules set)                                   * 
+ *                                                                          * 
+ *                                                                          * 
+ * Login             : fm3                                                  * 
+ * ***********                                                              *
+ * DN                : /C=US/ST=CA/L=Rocklin/O=Frank4DD/OU=nessus-client    *
+ *                     /CN=fm3/Email=fm3@192.168.11.8                       *
+ * Rules             :                                                      * 
+ *                                                                          * 
+ *                                                                          * 
+ * Is that ok ? (y/n) [y]                                                   * 
+ * user added.                                                              * 
+ * ------------------------------------------------------------------------ */ 
+
+
+/* ------------------------------------------------------------------------ *
+ *                        CLIENT SIDE CONFIGURATION                         * 
+ * ------------------------------------------------------------------------ *
+ *                                                                          * 
+ * fm@toshi:~/nessus-client/etc> /usr/share/ssl/misc/CA.pl -newcert         *
+ * Generating a 1024 bit RSA private key                                    *
+ * .........++++++                                                          *
+ * ........................................................++++++           *
+ * writing new private key to 'newreq.pem'                                  *
+ * Enter PEM pass phrase:                                                   *
+ * Verifying - Enter PEM pass phrase:                                       *
+ * phrase is too short, needs to be at least 4 chars                        *
+ * Enter PEM pass phrase:                                                   *
+ * Verifying - Enter PEM pass phrase:                                       *
+ * phrase is too short, needs to be at least 4 chars                        *
+ * fm@toshi:~/nessus-client/etc> /usr/share/ssl/misc/CA.pl -newcert         *
+ * Generating a 1024 bit RSA private key                                    *
+ * ........++++++                                                           *
+ * ....++++++                                                               *
+ * writing new private key to 'newreq.pem'                                  *
+ * Enter PEM pass phrase:                                                   *
+ * Verifying - Enter PEM pass phrase:                                       *
+ * -----                                                                    *
+ * You are about to be asked to enter information that will be incorporated *
+ * into your certificate request.                                           *
+ * What you are about to enter is what is called a Distinguished Name or a  *
+ * DN. There are quite a few fields but you can leave some blank            *
+ * For some fields there will be a default value,                           *
+ * If you enter '.', the field will be left blank.                          *
+ * -----                                                                    *
+ * Country Name (2 letter code) [US]:                                       *
+ * State or Province Name (full name) [CA]:                                 *
+ * Locality Name (eg, city) [Rocklin]:                                      *
+ * Organization Name (eg, company) [Frank4DDs web CA]:Frank4DD              *
+ * Organizational Unit Name (eg, section) []:nessus-client                  *
+ * Common Name (eg, YOUR name) []:fm3                                       *
+ * Email Address []:fm3@192.168.11.8                                        *
+ * Certificate (and private key) is in newreq.pem                           *
+ *                                                                          *
+ * fm@toshi:~/nessus-client/etc> more newreq.pem                            *
+ * -----BEGIN RSA PRIVATE KEY-----                                          *
+ * Proc-Type: 4,ENCRYPTED                                                   *
+ * DEK-Info: DES-EDE3-CBC,93B8135E246D1866                                  *
+ *                                                                          *
+ * DjENsb8S/sVV8Jr7W3u9EZTyIA8tPqq5zi0CYIhLmU1rE4A2yTvo+zlTe8m0TNbS         *
+ * x9KlZMtE7GeGSrTPsiHh9BwvSRMUxl9fdOl+HqlFmISFQPenz3nIaotPpcJ+WaME         *
+ * BozAz14MD6gwSiuRd0sTtyFBiwYAC6E1SGs7ab0OGMWvGbX9tnTN4P5UhZRX2kPy         *
+ * 7iKjUMNXPbqJ3tTYmLZ9/adIWtleALyl+DgGtRAbkq4UNZctWwLyjgaB2WYVVIfs         *
+ * PG1CacAlWa76bmkfT/NyUBmgzrgu4ceclV2A9J2+jYagQRhuQInpaUMho11uFiN6         *
+ * GkdTouYTUIhpIZ5T6wqlb51bEyBYzwpcnowqVgqQgn48WD5gDvPW+W7HRFE5fC3a         *
+ * RJhP85B4V/2xDjNsgNLYoJL4UquZ1StdTDTgy1uZ2W+/XlrGPcbJGFo7a6fMZx/K         *
+ * b259bQQROJIieBH4UzbtZy+9tS1BRaCXERvK3y5imkKyuUO0CkA4N1FTJ6c+ZiJo         *
+ * jCe+SqgdrOYzXR7FjrWHqagt/dvEMy0IlK3aZ7Wyra/JGIJ0MyOp4tx3qNpOlO4c         *
+ * V/bqO+VYwrk4xNOU462mC4xnxLIo1i9Jdk07yAEPR9zxmx9UnHQKr3+2pjmCU5GI         *
+ * N7hB/Mx+/iPkWvhPZMpMR0o30txCJqG2HwCVzcA+8TqD+3+1zEdyVrK/+gr2M56D         *
+ * oKmLdBYAJ8Voz3/uk0LPufNrITWPUw8Q7vXKESConzZBz+SFHpiOV+NPQ9q3C44q         *
+ * o48s4OtpUksBlRRmtCJlYJBAHIkhH5oXKRt4mLDzC9+NmdW3Jr4gng==                 *
+ * -----END RSA PRIVATE KEY-----                                            *
+ * -----BEGIN CERTIFICATE-----                                              *
+ * MIIDazCCAtSgAwIBAgIBADANBgkqhkiG9w0BAQQFADCBhjELMAkGA1UEBhMCVVMx         *
+ * CzAJBgNVBAgTAkNBMRAwDgYDVQQHEwdSb2NrbGluMREwDwYDVQQKEwhGcmFuazRE         *
+ * RDEWMBQGA1UECxMNbmVzc3VzLWNsaWVudDEMMAoGA1UEAxMDZm0zMR8wHQYJKoZI         *
+ * hvcNAQkBFhBmbTNAMTkyLjE2OC4xMS44MB4XDTA0MTIwODIxMTAwNloXDTA1MTIw         *
+ * ODIxMTAwNlowgYYxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEQMA4GA1UEBxMH         *
+ * Um9ja2xpbjERMA8GA1UEChMIRnJhbms0REQxFjAUBgNVBAsTDW5lc3N1cy1jbGll         *
+ * bnQxDDAKBgNVBAMTA2ZtMzEfMB0GCSqGSIb3DQEJARYQZm0zQDE5Mi4xNjguMTEu         *
+ * ODCBnzANBgkqhkiG9w0BAQEFAAOBjQAwgYkCgYEA+IMvRSxnzDKDYMj61noz/Gs/         *
+ * h6NBlGrW5hlI/eZ6KTgo98jaea9gdcEk9KjxG376Cgj7HAYw+oCD8jVDtQH02pPW         *
+ * hATTo1CY+UrZWLyIxmKDWxvIZozERSNqZRXvs0yUDgQY5YrTWB3D59vWBHZHybww         *
+ * jABU0dIXBbviLFaMO+UCAwEAAaOB5jCB4zAdBgNVHQ4EFgQUGSlpcVndw4VHCXFs         *
+ * Q9uJuPLAtoQwgbMGA1UdIwSBqzCBqIAUGSlpcVndw4VHCXFsQ9uJuPLAtoShgYyk         *
+ * gYkwgYYxCzAJBgNVBAYTAlVTMQswCQYDVQQIEwJDQTEQMA4GA1UEBxMHUm9ja2xp         *
+ * bjERMA8GA1UEChMIRnJhbms0REQxFjAUBgNVBAsTDW5lc3N1cy1jbGllbnQxDDAK         *
+ * BgNVBAMTA2ZtMzEfMB0GCSqGSIb3DQEJARYQZm0zQDE5Mi4xNjguMTEuOIIBADAM         *
+ * BgNVHRMEBTADAQH/MA0GCSqGSIb3DQEBBAUAA4GBAIz78QBKnvQjdRxw00uEw3k/         *
+ * SwOXPZamaIH3wBKydOG+aKJPH6c7yn9jlxV7Gapl/nOw2xBAYhHqh/OfeVSCnOSZ         *
+ * P3ugEPXOEMD8hOb62B20Z4yBqz8pOvM5cGU9FHgE8KtoCGN1tvcFK2UJRCp6FmDb         *
+ * oEle7iVqwnpplNO4XJ6w                                                     *
+ * -----END CERTIFICATE-----                                                *
+ *                                                                          *
+ * SEPARATING THE KEY FORM THE CERT FILE:                                   *
+ *                                                                          *
+ * fm@toshi:~/nessus-client/etc> cp newreq.pem privkey-w-pass.pem           *
+ * fm@toshi:~/nessus-client/etc> mv newreq.pem cert.pem                     *
+ * fm@toshi:~/nessus-client/etc> vi privkey-w-pass.pem (del certlines)      *
+ * fm@toshi:~/nessus-client/etc> vi cert.pem (del privkey lines)            *
+ *                                                                          *
+ * REMOVE PASSPHRASE FROM PRIVATE KEY:                                      *
+ *                                                                          *
+ * fm@toshi:~/nessus-client/etc> openssl rsa -in privkey-w-pass.pem         *
+ *                                           -out privkey.pem               *
+ * Enter pass phrase for privkey-w-pass.pem:                                *
+ * writing RSA key                                                          *
+ *                                                                          *
+ * fm@toshi:~/nessus-client/etc> cat privkey.pem                            *
+ * -----BEGIN RSA PRIVATE KEY----                                           *
+ * MIICXgIBAAKBgQD4gy9FLGfMMoNgyPrWejP8az+Ho0GUatbmGUj95nopOCj3yNp5         *
+ * r2B1wST0qPEbfvoKCPscBjD6gIPyNUO1AfTak9aEBNOjUJj5StlYvIjGYoNbG8hm         *
+ * jMRFI2plFe+zTJQOBBjlitNYHcPn29YEdkfJvDCMAFTR0hcFu+IsVow75QIDAQAB         *
+ * AoGBAO0srmmTVsDwmKg/R/54BLNsW+aEresLCGv0R9BiLca3HYpWPASUlzfrDO0f         *
+ * a3T1e4cmSRnW4tnA26zGnwbahiZQKja+kc3O6gScmQg8fqQ5iMf3n8VxEj88Jmxx         *
+ * z9bIGA97Q9XGiGwryu9S18Hs6r9U1HRA/srfgKoNBcgyBIuhAkEA/fHKIMIxLYps         *
+ * LEkIs2LgqLVWSQQKZhJniDi4HWswcfC2SsmN9zKfJaN9YZyfrcC1BlMhJWqPszgI         *
+ * fu0uyGEaiQJBAPqGI5qQsXjTIdQ//3bjUaa+drP/XP60QTGOn51Wo6vfe1GU6uIu         *
+ * thhalpE67OYbybvg18QVpdwb9IJaaYPiT30CQQDUvVWfAfBe/YLHyttuJJye2WOS         *
+ * wb7QagSv+wxLIPwxx/1/Q8EZ4R+wUXl9Z8/hqPo+dS/kf5QpCP0dEChMGAU5AkAi         *
+ * TO1hA0CZR2cRVXXXxEXwq5E7EdKcuPdYHqvx8ePU63NJ9za1oymhaf3Fgqje1J0p         *
+ * UR6ZpVEhMt6mXlSmDv1NAkEA4y8S43broyerQV3zBAp8MLLtK3vXSR+yWJMkYP9F         *
+ * vy7v8eULvHd+v3TZbBpQVt6WHMEoqutqx+7Nh0nCcVJ44A==                         *
+ * -----END RSA PRIVATE KEY-----                                            *
+ *                                                                          *
+ * ------------------------------------------------------------------------ */
+
+2.) Using nessus-mkcert-client to generate the cert, key and add the user
+    in one single step (be root so the nessus CA private key can be read).
+    It uses the nessus CA key and cert to sign a new certificate. Nessus
+    checks client certificates against its own root certificate where it
+    must match.
+
+/* fm@toshi:~/nessus-client/etc> su
+ * Password:
+ * root@toshi:/home/fm/nessus-client/etc # /home/nessus/bin/nessus-mkcert-client
+ * Do you want to register the users in the Nessus server
+ * as soon as you create their certificates ? (y/n): y
+ * This script will now ask you the relevant information to create the SSL
+ * client certificates for Nessus.
+ * Client certificates life time in days [365]:1460
+ * Your country (two letter code) [FR]: US
+ * Your state or province name [none]: CA
+ * Your location (e.g. town) [Paris]: Rocklin
+ * Your organization [none]: Frank4DD
+ * Your organizational unit [none]:nessus-client
+ * **********
+ * We are going to ask you some question for each client certificate
+ * If some question has a default answer, you can force an empty answer by
+ * entering a single dot '.'
+ * *********
+ * User #1 name (e.g. Nessus username): fm4
+ * Client certificates life time in days [1460]:
+ * Country (two letter code) [US]:
+ * State or province name [CA]:
+ * Location (e.g. town) [Rocklin]:
+ * Organization [Frank4DD]:
+ * Organization unit [nessus-client]:
+ * e-mail []: fm4@192.168.11.8
+ * Generating RSA private key, 1024 bit long modulus
+ * .........++++++
+ * ............++++++
+ * e is 65537 (0x10001)
+ * You are about to be asked to enter information that will be incorporated
+ * into your certificate request.
+ * What you are about to enter is what is called a Distinguished Name or a DN.
+ * There are quite a few fields but you can leave some blank
+ * For some fields there will be a default value,
+ * If you enter '.', the field will be left blank.
+ * -----
+ * Country Name (2 letter code) [FR]:State or Province Name (full name)
+ * [Some-State]:Locality Name (eg, city) []:Organization Name (eg, company)
+ * [Internet Widgits Pty Ltd]:Organizational Unit Name (eg, section)
+ * []:Common Name (eg, your name or your server's hostname)
+ * []:Email Address []:
+ * Using configuration from /tmp/nessus-mkcert.4792/stdC.cnf
+ * Check that the request matches the signature
+ * Signature ok
+ * The Subject's Distinguished Name is as follows
+ * countryName           :PRINTABLE:'US'
+ * stateOrProvinceName   :PRINTABLE:'CA'
+ * localityName          :PRINTABLE:'Rocklin'
+ * organizationName      :PRINTABLE:'Frank4DD'
+ * organizationalUnitName:PRINTABLE:'nessus-client'
+ * commonName            :PRINTABLE:'fm4'
+ * emailAddress          :IA5STRING:'fm4@192.168.11.8'
+ * Certificate is to be certified until Dec  7 21:53:38 2008 GMT (1460 days)
+ * 
+ * Write out database with 1 new entries
+ * Data Base Updated
+ * 
+ * User rules
+ * ----------
+ * nessusd has a rules system which allows you to restrict the hosts
+ * that  has the right to test. For instance, you may want
+ * him to be able to scan his own host only.
+ * 
+ * Please see the nessus-adduser(8) man page for the rules syntax
+ * 
+ * Enter the rules for this user, and hit ctrl-D once you are done:
+ * (the user can have an empty rules set)
+ * User added to Nessus.
+ * Another client certificate? n
+ * Your client certificates are in /tmp/nessus-mkcert.4792
+ * You will have to copy them by hand
+ * 
+ * 
+ * /tmp/nessus-mkcert.4792 is actually a directory and contains multiple 
+ * files. Noteworthy is a cert_nessuswx_fm4.pem file that can be directly
+ * imported to NessusWX, as it has both cert and private key in one file.
+ * 

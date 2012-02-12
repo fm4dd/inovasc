@@ -1339,7 +1339,10 @@ void write_hostresults(char *t_ip, char *s_ip, char *session) {
     outbuf[0] = '\0';
     len = 0;
     while((newline = strstr(startptr, "\\n"))) {
-      len = newline - startptr;
+      /* Some plugins have an added "\r" in front of "\n" */
+      if(strstr(newline-2, "\\r")) len = (newline - startptr)-2;
+      else len = newline - startptr;
+
       if(len > 0) {
         strncat(outbuf, startptr, len);
         strncat(outbuf, "<br>", 5);

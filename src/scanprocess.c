@@ -198,6 +198,7 @@ int cgiMain() {
                     sizeof(prefslist_ptr[i]->value));
       }
     }
+     int_error("test");
 
     /* count the enabled families */
     for(i=0; i<famly_counter; i++) {
@@ -287,7 +288,7 @@ int cgiMain() {
    fprintf(cgiOut, "<input type=button OnClick=\"return ");
    fprintf(cgiOut, "window.open(\'%s/updates-%s.htm\',",RESULTS_DIR,session_id);
    fprintf(cgiOut, " \'progress_update\',");
-   fprintf(cgiOut, " 'width=690,height=150,status=no,scrollbars=no');\"\n");
+   fprintf(cgiOut, " 'width=700,height=200,status=no,scrollbars=no');\"\n");
    fprintf(cgiOut, " value=\"Show Scan Progress Details\">");
    fprintf(cgiOut, "</td>");
 

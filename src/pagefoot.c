@@ -59,6 +59,6 @@ void pagefoot(FILE *out) {
      }
   }
 
-  fprintf(cgiOut, "</body>\n");
-  fprintf(cgiOut, "</html>\n");
+  fprintf(out, "</body>\n");
+  fprintf(out, "</html>\n");
 }

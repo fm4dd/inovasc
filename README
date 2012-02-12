@@ -70,7 +70,7 @@ to the /path/to/inovasc/etc directory and make it readable to the
 webserver.
 Also, you'll need to create a /path/to/inovasc/results directory that
 is writeable by the webserver. A detailled description can be found
-in INSTALL. 
+at http://www.frank4dd.com/sw/inovasc/install.htm. 
 
 Security:
 ---------

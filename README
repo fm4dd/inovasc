@@ -13,7 +13,7 @@ The idea to write the NessusWC client came in 2004 out
 of the need to manage a Nessus scanner farm with a unified
 and SIMPLE client accessible from anywhere, regardless of
 the OS platform. Existing web-based Nessus clients weren't
-web-based, and their usage was overly complicated.
+easy to set up, and their usage was overly complicated.
 
 Design Goals:
 -------------

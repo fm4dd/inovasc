@@ -7,7 +7,7 @@ frontend for executing scans with Nessus. When Nessus
 went commercial in 2008, it has been forked over into
 OpenVAS. Therefore, NessusWC has been adapted to work
 with the OpenVAS scanner and it was renamed to INOVASC
-, the __IN__dependent __O__pen__VAS__ __S__can __C__lient.
+, the __IN__ dependent __O__ pen __VAS__ __S__ can __C__ lient.
 
 The idea to write the NessusWC client came in 2004 out
 of the need to manage a Nessus scanner farm with a unified

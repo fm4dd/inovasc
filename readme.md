@@ -1,5 +1,5 @@
-INOVASC - Independend OpenVAS Client
-=========================================
+## INOVASC - Independend OpenVAS Client
+
 1/10/2012 Frank4DD (support@frank4dd.com)
 
 For some years I had been working on NessusWC - a Web
@@ -15,31 +15,27 @@ and SIMPLE client accessible from anywhere, regardless of
 the OS platform. Existing web-based Nessus clients weren't
 easy to set up, and their usage was overly complicated.
 
-Design Goals:
--------------
+### Design Goals:
 
-- Create a OpenVAS client software package that can be
+* Create a OpenVAS client software package that can be
 compiled and installed independently of OpenVAS.
 
-- The web interface should rely purely on CGI technology
+* The web interface should rely purely on CGI technology
 and be as simple and robust as possible.
 
-Software Compilation Prerequisites:
------------------------------------
+### Prerequisites:
 
-- OpenSSL library and headers
-- libcgic library and headers
+* OpenSSL library and headers
+* libcgic library and headers
 
-Configuration:
---------------
+### Configuration:
 
 Apart from the Makefiles in the root and src/ directories, 
 check the file nessuswc.h in the src/ directory. the upper
 section can be configured to set the URL location and the
 default nessus login parameters.
 
-Compilation:
-------------
+### Compilation:
 
 INOVASC depends on the OpenSSL libraries and on libcgic
 from www.boutell.com.
@@ -52,13 +48,12 @@ You can work around it by setting the path to the includes/libs
 explicit in the Makefile by adding the -I</path/to/includes>
 and -L<path/to/libs> to the compiler options.
 
-Installation:
--------------
+### Installation:
 
 Add the cgi path to the webservers configuration, i.e. for apache
 1.3 add a line like this to httpd.conf:
 
-ScriptAlias /inovasc/cgi-bin/ "/var/apache/htdocs/inovasc/cgi-bin/"
+`ScriptAlias /inovasc/cgi-bin/ "/var/apache/htdocs/inovasc/cgi-bin/"`
 or where the inovasc web home directory has been set up.
 
 The software is compiled with a "default" OpenVAS server IP, port
@@ -72,8 +67,7 @@ Also, you'll need to create a /path/to/inovasc/results directory that
 is writeable by the webserver. A detailled description can be found
 at http://www.frank4dd.com/sw/inovasc/install.htm. 
 
-Security:
----------
+### Security:
 
 It is highly adviseable to add a webserver directive and file system
 access control to prevent the /path/to/inovasc/etc directory
@@ -87,3 +81,5 @@ strict in nessusd.conf.
 
 Comments, help, bugfixes or enhancements and requests are always
 welcome under <support@frank4dd.com>.
+
+See also http://fm4dd.com/sw/

@@ -2,6 +2,8 @@
 
 1/10/2012 Frank4DD (support@frank4dd.com)
 
+![](images/inovasc.gif)
+
 For some years I had been working on NessusWC - a Web
 frontend for executing scans with Nessus. When Nessus
 went commercial in 2008, it has been forked over into
